@@ -1,0 +1,320 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+$primary-color: #28387D;
+$secondary-color: #5593CE;
+$white: #ffffff;
+
+.layout {
+  height: 100vh;
+  border: 0;
+  display: flex;
+  font-family: 'Futura';
+}
+
+.left-panel {
+  background: $primary-color;
+  height: 100%;
+  width: 30%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+
+  .name {
+    text-align: center;
+    padding: 20px;
+
+    h1 {
+      margin: 0;
+      color: $white;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+  }
+
+  .menu {
+    display: flex;
+    flex: 1;
+
+    .score {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      width: 50%;
+
+      &__value {
+        flex: 1;
+        text-align: center;
+
+        &--digit {
+          display: block;
+          font-size: 84px;
+          font-weight: 600;
+          color: $secondary-color;
+
+        }
+        &--info {
+          display: block;
+          font-size: 28px;
+          color: $white;
+          text-transform: uppercase;
+          margin-top: -10px;
+        }
+      }
+
+      &__logo {
+        background-size: 669px 647px;
+        background-image: url(https://www.iplt20.com/resources/ver/i/sprites/global-sprite@x2.png);
+        background-position: -431px -259px;
+        background-repeat: no-repeat;
+        display: block;
+        height: 56px;
+        width: 110px;
+        margin: 20px auto;
+      }
+
+
+    }
+
+    .matches {
+      flex: 1;
+      display: flex;
+      align-items: flex-end;
+      flex-direction: column;
+
+      h3 {
+        color: $secondary-color;
+        margin-left: -20px;
+        margin-bottom: 0;
+        align-self: center;
+      }
+
+      &__list {
+        list-style: none;
+        padding-left: 0;
+        overflow: scroll;
+        height: calc(100vh - 160px);
+        margin-right: -20px;
+
+        &--item {
+          color: $white;
+          padding: 20px 50px 20px 30px;
+
+          &.selected {
+            background-color: $secondary-color;
+            position: relative;
+
+            &::after {
+              content: '';
+              display: block;
+              position: absolute;
+              top: -19.5px;
+              right: 0;
+              background-color: #3e6c98;
+              height: 20px;
+              width: 20px;
+              clip-path: polygon(0 50%, 100% 100%, 0 100% );
+
+            }
+          }
+
+          b {
+            display: block;
+            font-size: 26px;
+          }
+
+          span {
+            font-size: 22px;
+          }
+        }
+      }
+    }
+  }
+
+
+}
+
+.right-panel {
+  flex: 1;
+
+  .card-holder {
+    width: 600px;
+    height: 400px;
+    display: flex;
+    margin: 50px auto;
+    z-index: 1;
+    position: relative;
+
+    .arrow {
+      width: 60px;
+      height: 170px;
+      position: absolute;
+      background-repeat: no-repeat;
+      background-size: cover;
+      transition: .2s transform;
+      cursor: pointer;
+
+      &-left {
+        background-image: url("./img/left.svg");
+        top: 20px;
+        left: -10px;
+        transform: rotate(-5deg);
+
+        &:hover {
+          transform: scale(1.2) rotate(-5deg) translateX(-5px);
+        }
+      }
+
+      &-right {
+        background-image: url("./img/right.svg");
+        bottom: -35px;
+        right: 0;
+        transform: rotate(-5deg);
+
+        &:hover {
+          transform: scale(1.2) rotate(-5deg) translateX(5px);
+        }
+      }
+
+    }
+
+
+    .card {
+      flex: 1;
+      text-align: left;
+      height: 100%;
+      box-shadow: 0 3px 5px rgba(0,0,0,.2);
+      margin: 30px;
+      transform: skewX(-10deg);
+      position: relative;
+      background-size: cover;
+      z-index: 2;
+
+      & > * {
+        transform: skewX(10deg);
+      }
+
+      &.card-left {
+        background-image: linear-gradient(to right, #5F5AA2, #412C69);
+
+        &:after {
+          content: 'VS';
+          display: flex;
+          position: absolute;
+          z-index: 3;
+          top: 150px;
+          right: -75px;
+          width: 70px;
+          height: 70px;
+          border-radius: 50%;
+          background-color: $white;
+          border: 10px solid #ddd;
+          align-items: center;
+          justify-content: center;
+          font-size: 26px;
+          font-weight: 600;
+        }
+      }
+
+      &.card-right {
+        background-image: linear-gradient(to right, #545555, #1D1D1B);
+        z-index: 1;
+      }
+
+      .team-logo {
+        background-image: url(https://www.iplt20.com/resources/ver/i/sprites/tLogo198x-sprite@x2.png);
+        background-size: 1010px 807px;
+        background-repeat: no-repeat;
+        display: block;
+        width: 198px;
+        height: 198px;
+        position: absolute;
+        right: -40px;
+        top: -60px;
+
+        &-left {
+          background-position: -406px -203px;
+        }
+
+        &-right {
+          background-position: -609px -203px;
+        }
+      }
+
+      .team-name {
+        font-size: 56px;
+        margin-top: 130px;
+        margin-left: 15px;
+        color: $white;
+        z-index: 2;
+        font-style: italic;
+      }
+
+      .team-name-bg {
+        font-size: 130px;
+        font-weight: 600;
+        position: absolute;
+        left: -20px;
+        top: 80px;
+        z-index: 0;
+        color: $white;
+        opacity: .1;
+        font-style: italic;
+      }
+
+      .player {
+        position: absolute;
+        right: -20px;
+        bottom: -4px;
+      }
+
+      .btn {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        padding: 75px 30px 15px;
+        font-size: 26px;
+        font-weight: 500;
+        font-style: italic;
+        text-transform: uppercase;
+        color: #000;
+        width: 184px;
+        background-color: #fff;
+        color: #000;
+        text-align: left;
+        clip-path: polygon(23px 0, 99% 100%, 1px 100%);
+        margin-left: -12px;
+        cursor: pointer;
+        transition: .2s all;
+
+        &:hover {
+          background-color: #DBAE46;
+        }
+      }
+    }
+  }
+
+  .details {
+    color: $primary-color;
+    padding: 10px 120px;
+
+    &__date {
+      font-size: 38px;
+      margin-bottom: 0;
+    }
+
+    &__venue {
+      margin-top: 5px;
+      font-size: 28px;
+      font-weight: 300;
+      text-transform: uppercase;
+    }
+  }
+}
