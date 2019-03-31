@@ -1,9 +1,34 @@
+//@font-face {
+//  font-family: Futura;
+//  src: url('./fonts/FuturaBoldfont.ttf') format("TTF");
+//  font-weight: normal;
+//}
+@font-face {
+  font-family: Futura;
+  src: url('fonts/FuturaLightItalic.ttf') format("truetype");
+  font-weight: 300;
+  font-style: italic;
+}
+@font-face {
+  font-family: Futura;
+  src: url('fonts/FuturaLight.ttf') format("truetype");
+  font-weight: 300;
+}
+@font-face {
+  font-family: Futura;
+  src: url('./fonts/FuturaHeavy.ttf') format("truetype");
+  font-weight: 700;
+}
+@font-face {
+  font-family: Futura;
+  src: url('./fonts/FuturaHeavyItalic.ttf') format("truetype");
+  font-weight: 700;
+  font-style: italic;
+}
+
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -16,13 +41,13 @@ $white: #ffffff;
   height: 100vh;
   border: 0;
   display: flex;
-  font-family: 'Futura';
+  font-family: Futura !important;
 }
 
 .left-panel {
   background: $primary-color;
   height: 100%;
-  width: 30%;
+  width: 35%;
   margin: 0;
   display: flex;
   flex-direction: column;
@@ -68,19 +93,6 @@ $white: #ffffff;
           margin-top: -10px;
         }
       }
-
-      &__logo {
-        background-size: 669px 647px;
-        background-image: url(https://www.iplt20.com/resources/ver/i/sprites/global-sprite@x2.png);
-        background-position: -431px -259px;
-        background-repeat: no-repeat;
-        display: block;
-        height: 56px;
-        width: 110px;
-        margin: 20px auto;
-      }
-
-
     }
 
     .matches {
@@ -100,12 +112,13 @@ $white: #ffffff;
         list-style: none;
         padding-left: 0;
         overflow: scroll;
-        height: calc(100vh - 160px);
+        height: calc(100vh - 260px);
         margin-right: -20px;
 
         &--item {
           color: $white;
           padding: 20px 50px 20px 30px;
+          cursor: pointer;
 
           &.selected {
             background-color: $secondary-color;
@@ -138,17 +151,79 @@ $white: #ffffff;
     }
   }
 
+  .message {
+    padding: 100px 50px 50px;
+    margin: 0 auto;
+
+    span {
+      font-size: 92px;
+      display: block;
+      color: $white;
+      font-weight: 100;
+
+      &:last-child {
+        color: $secondary-color;
+        font-weight: bolder;
+      }
+    }
+  }
+
+  .ipl-logo {
+    background-size: 669px 647px;
+    background-image: url(https://www.iplt20.com/resources/ver/i/sprites/global-sprite@x2.png);
+    background-position: -431px -259px;
+    background-repeat: no-repeat;
+    display: block;
+    height: 56px;
+    width: 110px;
+    margin: 20px auto 20px 20px;
+  }
+
 
 }
 
 .right-panel {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  .login {
+    flex: 1;
+
+    .form {
+      width: 300px;
+      margin: 220px auto;
+    }
+
+    input {
+      border: 0;
+      border-bottom: 1px solid $primary-color;
+      width: 100%;
+      padding-bottom: 10px;
+      font-size: 20px;
+      font-family: inherit;
+      margin-bottom: 20px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      font-size: 20px;
+      border: 0;
+      background: $secondary-color;
+      color: $white;
+      font-weight: 600;
+      font-family: inherit;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+  }
 
   .card-holder {
     width: 600px;
     height: 400px;
     display: flex;
-    margin: 50px auto;
+    margin: 100px auto;
     z-index: 1;
     position: relative;
 
@@ -202,8 +277,6 @@ $white: #ffffff;
       }
 
       &.card-left {
-        background-image: linear-gradient(to right, #5F5AA2, #412C69);
-
         &:after {
           content: 'VS';
           display: flex;
@@ -224,7 +297,6 @@ $white: #ffffff;
       }
 
       &.card-right {
-        background-image: linear-gradient(to right, #545555, #1D1D1B);
         z-index: 1;
       }
 
@@ -238,10 +310,6 @@ $white: #ffffff;
         position: absolute;
         right: -40px;
         top: -60px;
-
-        &-left {
-          background-position: -406px -203px;
-        }
 
         &-right {
           background-position: -609px -203px;
@@ -279,7 +347,7 @@ $white: #ffffff;
         position: absolute;
         left: 0;
         bottom: 0;
-        padding: 75px 30px 15px;
+        padding: 75px 40px 15px 20px;
         font-size: 26px;
         font-weight: 500;
         font-style: italic;
@@ -294,9 +362,12 @@ $white: #ffffff;
         cursor: pointer;
         transition: .2s all;
 
-        &:hover {
-          background-color: #DBAE46;
+        &:hover,
+        &-selected {
+          background-color: #8BC34A;
+          color: $white;
         }
+
       }
     }
   }
@@ -304,17 +375,46 @@ $white: #ffffff;
   .details {
     color: $primary-color;
     padding: 10px 120px;
+    flex: 1;
+    display: flex;
 
-    &__date {
-      font-size: 38px;
-      margin-bottom: 0;
+    &__left {
+      flex: 1;
+
+      &--date {
+        font-size: 38px;
+        margin-bottom: 0;
+      }
+
+      &--venue {
+        margin-top: 5px;
+        font-size: 28px;
+        font-weight: 300;
+        text-transform: uppercase;
+      }
     }
 
-    &__venue {
-      margin-top: 5px;
-      font-size: 28px;
-      font-weight: 300;
-      text-transform: uppercase;
+    &__right {
+      &--time {
+        text-align: right;
+        font-size: 34px;
+        color: $secondary-color;
+      }
+    }
+  }
+
+  .footer {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 56px;
+    width: 100%;
+
+    .logo {
+      background-image: url("./img/afl.svg");
+      height: 100%;
+      background-repeat: no-repeat;
+      background-position: right;
+      margin-right: 20px;
     }
   }
 }

@@ -1,7 +1,132 @@
 import React, { Component } from 'react';
+import cx from 'classnames';
+import keydown from 'react-keydown';
+
+const matches = [
+  {
+    id: 1,
+    match_date : "Thu 4th April",
+    team_1 : "KXIP",
+    team_2 : "MI",
+    match_time : "4:30pm",
+    voted_for : "MI"
+  },
+  {
+    id: 2,
+    match_date : "Fri 5th April",
+    team_1 : "CSK",
+    team_2 : "SRH",
+    match_time : "4:30pm",
+    voted_for : "CSK"
+  },
+  {
+    id: 3,
+    match_date : "Sat 6th April",
+    team_1 : "KKR",
+    team_2 : "RCB",
+    match_time : "4:30pm",
+    voted_for : "RCB"
+  },
+  {
+    id: 4,
+    match_date : "Sun 7th April",
+    team_1 : "DC",
+    team_2 : "RR",
+    match_time : "4:30pm",
+    voted_for : "RR"
+  },
+];
+
+const teams = {
+  "KKR": {
+    colors: ["#5F5AA2","#412C69"],
+    logo: ['-406px', '-203px'],
+    captain: require('../img/captains/kkr.png')
+  },
+  "RCB": {
+    colors: ["#545555", "#1D1D1B"],
+    logo: ['-609px', '-203px'],
+    captain: require('../img/captains/rcb.png')
+  },
+  "KXIP": {
+    colors: ["#d42028", "#b02026"],
+    logo: ['-203px', '-406px'],
+    captain: require('../img/captains/kxip.png')
+  },
+  "MI": {
+    colors: ["#046fb2", "#005da0"],
+    logo: ['0px', '0px'],
+    captain: require('../img/captains/mi.png')
+  },
+  "RR": {
+    colors: ["#4587c9", "#0751a0"],
+    logo: ['0px', '-609px'],
+    captain: require('../img/captains/rr.png')
+  },
+  "SRH": {
+    colors: ["#f89734", "#f26732"],
+    logo: ['-406px', '-609px'],
+    captain: require('../img/captains/srh.png')
+  },
+  "DC": {
+    colors: ["#0076bf", "#004c94"],
+    logo: ['-406px', '-406px'],
+    captain: require('../img/captains/dc.png')
+  },
+  "CSK": {
+    colors: ["#f1d100", "#ec6707"],
+    logo: ['-203px', '0px'],
+    captain: require('../img/captains/csk.png')
+  },
+}
 
 class Home extends Component {
+  state = {
+    selected: {
+      id: 3,
+      match_date : "Sat 6th April",
+      team_1 : "KKR",
+      team_2 : "RCB",
+      match_time : "4:30pm",
+      voted_for : "RCB"
+    }
+  }
+
+  selectTeam = selected => {
+    this.setState({selected})
+  }
+
+  next = () => {
+    const { id } = this.state.selected
+    if (id === matches.length) return;
+
+    let nextMatchId = id + 1;
+    let selected = matches.find(m => m.id === nextMatchId);
+    this.setState({ selected })
+  }
+
+  prev = () => {
+    const { id } = this.state.selected
+    if (id === 1) return;
+
+    let prevMatchId = id - 1;
+    let selected = matches.find(m => m.id === prevMatchId);
+    this.setState({ selected })
+  }
+
+  componentWillReceiveProps( { keydown } ) {
+    if ( keydown.event ) {
+      if (keydown.event.code === "ArrowRight" || keydown.event.code === "ArrowDown") {
+        this.next()
+      }
+      if (keydown.event.code === "ArrowLeft" || keydown.event.code === "ArrowUp") {
+        this.prev()
+      }
+    }
+  }
+
   render() {
+    const { selected } = this.state;
     return (
       <div className="layout">
         <div className="left-panel">
@@ -15,68 +140,79 @@ class Home extends Component {
                 <span className="score__value--digit">60</span>
                 <span className="score__value--info">Points</span>
               </div>
-              <div className="score__logo"/>
             </div>
             <div className="matches">
               <h3>Matches</h3>
               <ul className="matches__list">
-                <li className="matches__list--item">
-                  <b>DC vs SRH</b>
-                  <span>Thu 4th April</span>
-                </li>
-                <li className="matches__list--item selected">
-                  <b>KKR vs RCB</b>
-                  <span>Fri 5th April</span>
-                </li>
-                <li className="matches__list--item ">
-                  <b>DC vs SRH</b>
-                  <span>Sat 6th April</span>
-                </li>
-                <li className="matches__list--item">
-                  <b>DC vs SRH</b>
-                  <span>Sat 6th April</span>
-                </li>
-                <li className="matches__list--item">
-                  <b>DC vs SRH</b>
-                  <span>Sat 6th April</span>
-                </li>
+                {matches.map(match => (
+                  <li
+                    key={match.id}
+                    onClick={() => this.selectTeam(match)}
+                    className={cx(["matches__list--item", match.id === selected.id && 'selected'])}
+                  >
+                    <b>{match.team_1} vs {match.team_2}</b>
+                    <span>{match.match_date}</span>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
+          <div className="ipl-logo"/>
         </div>
 
         <div className="right-panel">
           <div className="card-holder">
-            <div className="arrow arrow-left"/>
-            <div className="arrow arrow-right"/>
-            <div className="card card-left">
-              <div className="team-logo team-logo-left"/>
-              <span className="team-name-bg">KKR</span>
-              <h2 className="team-name">KKR</h2>
-              <div className="btn">
+            {selected.id !== 1 && <div className="arrow arrow-left" onClick={this.prev}/>}
+            {selected.id !== matches.length && <div className="arrow arrow-right" onClick={this.next}/>}
+            <div
+              className="card card-left"
+              style={{ backgroundImage: `linear-gradient(to right, ${teams[selected.team_1].colors[0]}, ${teams[selected.team_1].colors[1]})`}}
+            >
+              <div
+                className="team-logo team-logo-left"
+                style={{ backgroundPosition: `${teams[selected.team_1].logo[0]} ${teams[selected.team_1].logo[1]}` }}
+              />
+              <span className="team-name-bg">{selected.team_1}</span>
+              <h2 className="team-name">{selected.team_1}</h2>
+              <div className={cx(["btn", selected.voted_for === selected.team_1 && 'btn-selected'])}>
                 Wins
               </div>
               <div className="player">
-                <img src="https://iplstatic.s3.amazonaws.com/players/210/102.png" alt="player"/>
+                <img src={teams[selected.team_1].captain} alt="player"/>
               </div>
             </div>
-            <div className="card card-right">
-              <div className="team-logo team-logo-right"/>
+            <div
+              className="card card-right"
+              style={{ backgroundImage: `linear-gradient(to right, ${teams[selected.team_2].colors[0]}, ${teams[selected.team_2].colors[1]})`}}
+            >
+              <div
+                className="team-logo team-logo-right"
+                style={{ backgroundPosition: `${teams[selected.team_2].logo[0]} ${teams[selected.team_2].logo[1]}` }}
+              />
 
-              <span className="team-name-bg">RCB</span>
-              <h2 className="team-name">RCB</h2>
+              <span className="team-name-bg">{selected.team_2}</span>
+              <h2 className="team-name">{selected.team_2}</h2>
 
-              <div className="btn">
+              <div className={cx(["btn", selected.voted_for === selected.team_2 && 'btn-selected'])}>
                 Wins
               </div>
               <div className="player">
-                <img src="https://iplstatic.s3.amazonaws.com/players/210/164.png" alt="player"/>
+                <img src={teams[selected.team_2].captain} alt="player"/>
               </div>
             </div>
           </div>
           <div className="details">
-            <h3 className="details__date">Friday, April 5th</h3>
-            <h4 className="details__venue">Bengaluru</h4>
+            <div className="details__left">
+              <h3 className="details__left--date">{selected.match_date}</h3>
+              <h4 className="details__left--venue">Bengaluru</h4>
+            </div>
+            <div className="details__right">
+              <h3 className="details__right--time">{selected.match_time}</h3>
+            </div>
+          </div>
+
+          <div className="footer">
+            <div className="logo"/>
           </div>
         </div>
       </div>
@@ -84,4 +220,6 @@ class Home extends Component {
   }
 }
 
-export default Home;
+
+
+export default keydown(Home);
