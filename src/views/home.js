@@ -114,6 +114,15 @@ class Home extends Component {
     this.setState({ selected })
   }
 
+  onVote = voted_for => {
+    this.setState(state => ({
+      selected: {
+        ...state.selected,
+        voted_for
+      }
+    }))
+  }
+
   componentWillReceiveProps( { keydown } ) {
     if ( keydown.event ) {
       if (keydown.event.code === "ArrowRight" || keydown.event.code === "ArrowDown") {
@@ -164,7 +173,9 @@ class Home extends Component {
           <div className="card-holder">
             {selected.id !== 1 && <div className="arrow arrow-left" onClick={this.prev}/>}
             {selected.id !== matches.length && <div className="arrow arrow-right" onClick={this.next}/>}
+
             <div
+              onClick={() => this.onVote(selected.team_1)}
               className="card card-left"
               style={{ backgroundImage: `linear-gradient(to right, ${teams[selected.team_1].colors[0]}, ${teams[selected.team_1].colors[1]})`}}
             >
@@ -182,6 +193,7 @@ class Home extends Component {
               </div>
             </div>
             <div
+              onClick={() => this.onVote(selected.team_2)}
               className="card card-right"
               style={{ backgroundImage: `linear-gradient(to right, ${teams[selected.team_2].colors[0]}, ${teams[selected.team_2].colors[1]})`}}
             >
@@ -212,6 +224,10 @@ class Home extends Component {
           </div>
 
           <div className="footer">
+            <div className="key-hint">
+              Navigate matches using keyboard arrow keys
+              <img src={require('../img/nav.svg')} alt="nav-keys"/>
+            </div>
             <div className="logo"/>
           </div>
         </div>

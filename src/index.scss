@@ -186,6 +186,7 @@ $white: #ffffff;
   flex: 1;
   display: flex;
   flex-direction: column;
+  position: relative;
 
   .login {
     flex: 1;
@@ -271,6 +272,54 @@ $white: #ffffff;
       position: relative;
       background-size: cover;
       z-index: 2;
+      cursor: pointer;
+      transition: .2s transform;
+
+      &:hover {
+
+        transform: scale(1.1) skewX(-10deg);
+
+        .team-logo {
+          transform: skewX(10deg) translateY(-20px);
+        }
+
+        .team-name {
+          transform: scale(1.3) skewX(10deg) translateX(30px) translateY(-15px);
+        }
+
+        .player {
+          transform: scale(1.1) skewX(10deg) translateY(-10px);
+        }
+
+        .btn {
+          background-color: #8BC34A;
+          color: $white;
+        }
+      }
+
+      &:active {
+
+        transform: scale(1) skewX(-10deg);
+
+        .team-logo {
+          transform: skewX(10deg) translateY(0);
+        }
+
+        .team-name {
+          transform: scale(1.2) skewX(10deg) translateX(10px) translateY(-5px);
+        }
+
+        .player {
+          transform: scale(1) skewX(10deg) translateY(0px);
+        }
+
+        .btn {
+          background-color: #689f38;
+          padding: 110px 40px 15px 20px;
+          clip-path: polygon(27px 0px, 99% 100%, 0px 100%);
+          margin-left: -14px;
+        }
+      }
 
       & > * {
         transform: skewX(10deg);
@@ -310,6 +359,7 @@ $white: #ffffff;
         position: absolute;
         right: -40px;
         top: -60px;
+        transition: .3s transform;
 
         &-right {
           background-position: -609px -203px;
@@ -323,6 +373,8 @@ $white: #ffffff;
         color: $white;
         z-index: 2;
         font-style: italic;
+        transition: .3s transform;
+
       }
 
       .team-name-bg {
@@ -341,6 +393,7 @@ $white: #ffffff;
         position: absolute;
         right: -20px;
         bottom: -4px;
+        transition: .4s transform;
       }
 
       .btn {
@@ -349,13 +402,12 @@ $white: #ffffff;
         bottom: 0;
         padding: 75px 40px 15px 20px;
         font-size: 26px;
-        font-weight: 500;
+        font-weight: 700;
         font-style: italic;
         text-transform: uppercase;
         color: #000;
         width: 184px;
         background-color: #fff;
-        color: #000;
         text-align: left;
         clip-path: polygon(23px 0, 99% 100%, 1px 100%);
         margin-left: -12px;
@@ -408,6 +460,7 @@ $white: #ffffff;
     margin-bottom: 20px;
     height: 56px;
     width: 100%;
+    display: flex;
 
     .logo {
       background-image: url("./img/afl.svg");
@@ -415,6 +468,24 @@ $white: #ffffff;
       background-repeat: no-repeat;
       background-position: right;
       margin-right: 20px;
+      flex: 1;
     }
   }
+}
+
+.key-hint {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  color: #757575;
+
+  img {
+    width: 120px;
+    margin-left: 20px;
+  }
+
+}
+
+.Toastify__toast {
+  font-family: Futura !important;
 }

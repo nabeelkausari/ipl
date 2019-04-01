@@ -3,14 +3,16 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import Home from './views/home';
 import Login from './views/login';
+import requireAuth from './hoc/requireAuth';
+import requireUnAuth from './hoc/requireUnAuth';
 
 class App extends Component {
   render() {
     return (
       <Router>
         <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/login/" component={Login} />
+          <Route path="/" exact component={requireAuth(Home)} />
+          <Route path="/login/" component={requireUnAuth(Login)} />
         </Switch>
       </Router>
     );
