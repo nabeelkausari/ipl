@@ -1,1 +1,1 @@
-export let ip_address = "http://192.168.51.111:8000"
+export let ip_address = "http://95.216.227.230:8000"
