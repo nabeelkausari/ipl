@@ -59,7 +59,7 @@ class Login extends Component {
             <div className="logo"/>
           </div>
         </div>
-        <ToastContainer/>
+        <ToastContainer autoClose={2000}/>
       </div>
     )
   }

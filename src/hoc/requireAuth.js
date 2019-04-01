@@ -6,7 +6,7 @@ export default ComposedComponent => {
     checkAuth = () => {
       let token = localStorage.getItem('token');
       if (!token) {
-        this.props.history.push('/login')
+        this.props.history.push('/')
       }
     }
 

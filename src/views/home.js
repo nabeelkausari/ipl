@@ -13,42 +13,42 @@ import get from "lodash/get"
 const teams = {
   "KKR": {
     colors: ["#5F5AA2","#412C69"],
-    logo: ['-406px', '-203px'],
-    captain: require('../img/captains/kkr.png')
+    captain: require('../img/captains/kkr.png'),
+    logo: require('../img/teams/kkr.png')
   },
   "RCB": {
     colors: ["#545555", "#1D1D1B"],
-    logo: ['-609px', '-203px'],
+    logo: require('../img/teams/rcb.png'),
     captain: require('../img/captains/rcb.png')
   },
   "KXIP": {
     colors: ["#d42028", "#b02026"],
-    logo: ['-203px', '-406px'],
+    logo: require('../img/teams/kxip.png'),
     captain: require('../img/captains/kxip.png')
   },
   "MI": {
     colors: ["#046fb2", "#005da0"],
-    logo: ['0px', '0px'],
+    logo: require('../img/teams/mi.png'),
     captain: require('../img/captains/mi.png')
   },
   "RR": {
     colors: ["#4587c9", "#0751a0"],
-    logo: ['0px', '-609px'],
+    logo: require('../img/teams/rr.png'),
     captain: require('../img/captains/rr.png')
   },
   "SRH": {
     colors: ["#f89734", "#f26732"],
-    logo: ['-406px', '-609px'],
+    logo: require('../img/teams/srh.png'),
     captain: require('../img/captains/srh.png')
   },
   "DC": {
     colors: ["#0076bf", "#004c94"],
-    logo: ['-406px', '-406px'],
+    logo: require('../img/teams/dc.png'),
     captain: require('../img/captains/dc.png')
   },
   "CSK": {
     colors: ["#f1d100", "#ec6707"],
-    logo: ['-203px', '0px'],
+    logo: require('../img/teams/csk.png'),
     captain: require('../img/captains/csk.png')
   },
 }
@@ -91,6 +91,12 @@ class Home extends Component {
   }
 
   onVote = vote => {
+    this.setState(state => ({
+      selected: {
+        ...state.selected,
+        voted_for: vote.team_name
+      }
+    }));
     axios.post(`${ip_address}/vote/submit`, vote, {headers: { "Authorization": `Token ${localStorage.getItem('token')}` }})
       .then(res => {
         const { matches } = this.state;
@@ -110,7 +116,15 @@ class Home extends Component {
           ]
         }), () => toast(` 👍 ${res.data}`))
       })
-      .catch(err => toast.error(` 😱 ${get(err, 'response.data.message') || "Something went wrong"}`))
+      .catch(err => {
+        this.setState(state => ({
+          selected: {
+            ...state.selected,
+            voted_for: null
+          }
+        }));
+        toast.error(` 😱 ${get(err, 'response.data.message') || "Something went wrong"}`)
+      })
   }
 
   componentDidMount() {
@@ -154,7 +168,7 @@ class Home extends Component {
       loading
       ? <Loader/>
       : <div className="layout">
-          <ToastContainer/>
+          <ToastContainer autoClose={2000}/>
           <div className="left-panel">
             <div className="name">
               <h1>{localStorage.getItem('fullname')}</h1>
@@ -206,7 +220,7 @@ class Home extends Component {
                 <div
                   className="team-logo team-logo-left"
                   style={{ backgroundPosition: `${teams[selected.team_1].logo[0]} ${teams[selected.team_1].logo[1]}` }}
-                />
+                ><img src={teams[selected.team_1].logo} alt="team-logo"/></div>
                 <span className="team-name-bg">{selected.team_1}</span>
                 <h2 className="team-name">{selected.team_1}</h2>
                 <div className={cx(["btn", selected.voted_for === selected.team_1 && 'btn-selected'])}>
@@ -230,7 +244,7 @@ class Home extends Component {
                 <div
                   className="team-logo team-logo-right"
                   style={{ backgroundPosition: `${teams[selected.team_2].logo[0]} ${teams[selected.team_2].logo[1]}` }}
-                />
+                ><img src={teams[selected.team_2].logo} alt="team-logo"/></div>
 
                 <span className="team-name-bg">{selected.team_2}</span>
                 <h2 className="team-name">{selected.team_2}</h2>

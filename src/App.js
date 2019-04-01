@@ -12,8 +12,8 @@ class App extends Component {
     return (
       <Router>
         <Switch>
-          <Route path="/" exact component={requireAuth(Home)} />
-          <Route path="/login/" component={requireUnAuth(Login)} />
+          <Route path="/home" exact component={requireAuth(Home)} />
+          <Route path="/" component={requireUnAuth(Login)} />
         </Switch>
       </Router>
     );
