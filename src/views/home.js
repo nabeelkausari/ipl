@@ -5,6 +5,7 @@ import keydown from 'react-keydown';
 import axios from "axios";
 import moment from 'moment';
 import { ToastContainer, toast } from 'react-toastify';
+import { ip_address } from "../constants"
 
 import Loader from '../loader'
 
@@ -89,7 +90,7 @@ class Home extends Component {
   }
 
   onVote = vote => {
-    axios.post('http://192.168.51.111:8000/vote/submit', vote, {headers: { "Authorization": `Token ${localStorage.getItem('token')}` }})
+    axios.post(`${ip_address}/vote/submit`, vote, {headers: { "Authorization": `Token ${localStorage.getItem('token')}` }})
       .then(res => {
         const { matches } = this.state;
         let matchIndex = matches.findIndex(m => m.id === vote.id);
@@ -106,13 +107,14 @@ class Home extends Component {
             },
             ...matches.slice(matchIndex + 1)
           ]
-        }), () => toast(`👍 ${res.data}`))
+        }), () => toast(` 👍 ${res.data}`))
       })
+      .catch(err => toast.error(` 😱 ${err.response.data.message}`))
   }
 
   componentDidMount() {
 
-    axios.get('http://192.168.51.111:8000/vote/matches', {headers: { "Authorization": `Token ${localStorage.getItem('token')}` }})
+    axios.get(`${ip_address}/vote/matches`, {headers: { "Authorization": `Token ${localStorage.getItem('token')}` }})
       .then(res => {
           let activeMatches = res.data.filter(d => d.is_expired === false)
           this.setState({
@@ -123,7 +125,7 @@ class Home extends Component {
           })
         }
       )
-      .catch(err => console.log(err))
+      .catch(err => toast.error(` 😱 ${err.response.data.message}`))
   }
 
   componentWillReceiveProps( { keydown } ) {

@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom'
 import keydown from 'react-keydown';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
+import {ip_address} from "../constants"
 
 class Login extends Component {
   state = {
@@ -16,7 +17,7 @@ class Login extends Component {
 
   onSubmit = (e) => {
     e.preventDefault()
-    axios.post('http://192.168.51.111:8000/vote/login', this.state)
+    axios.post(`${ip_address}/vote/login`, this.state)
       .then(({ data: { token, email, fullname, score }}) => {
         toast('🦄 Login Success')
         localStorage.setItem('token', token);
@@ -25,7 +26,7 @@ class Login extends Component {
         localStorage.setItem('score', score);
         this.props.history.push('/')
       })
-      .catch(err => toast.error('Something went wrong'))
+      .catch(err => toast.error(` 😱 ${err.response.data.message}`))
   }
 
   render() {

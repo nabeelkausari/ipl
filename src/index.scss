@@ -51,7 +51,7 @@ $white: #ffffff;
 .left-panel {
   background: $primary-color;
   height: 100%;
-  width: 35%;
+  width: 30%;
   margin: 0;
   display: flex;
   flex-direction: column;
@@ -115,7 +115,7 @@ $white: #ffffff;
       &__list {
         list-style: none;
         padding-left: 0;
-        overflow: scroll;
+        overflow: auto;
         height: calc(100vh - 260px);
         margin-right: -20px;
 
@@ -295,10 +295,10 @@ $white: #ffffff;
           transform: scale(1.1) skewX(10deg) translateY(-10px);
         }
 
-        .btn {
-          background-color: #8BC34A;
-          color: $white;
-        }
+        //.btn {
+        //  background-color: #8BC34A;
+        //  color: $white;
+        //}
       }
 
       &:active {
@@ -418,10 +418,10 @@ $white: #ffffff;
         cursor: pointer;
         transition: .2s all;
 
-        &:hover {
-          background-color: #8BC34A;
-          color: $white;
-        }
+        //&:hover {
+        //  background-color: #8BC34A;
+        //  color: $white;
+        //}
         &-selected {
           background-color: #8BC34A;
           color: $white;
