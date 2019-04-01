@@ -5,6 +5,7 @@ import Home from './views/home';
 import Login from './views/login';
 import requireAuth from './hoc/requireAuth';
 import requireUnAuth from './hoc/requireUnAuth';
+import 'react-toastify/dist/ReactToastify.css';
 
 class App extends Component {
   render() {

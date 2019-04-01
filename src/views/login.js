@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import keydown from 'react-keydown';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
 class Login extends Component {
   state = {
@@ -16,10 +16,16 @@ class Login extends Component {
 
   onSubmit = (e) => {
     e.preventDefault()
-    console.log(this.state)
-    toast.error('🦄 Successfully fetched the data.');
-    // localStorage.setItem('token', 'some');
-    // this.props.history.push('/')
+    axios.post('http://192.168.51.111:8000/vote/login', this.state)
+      .then(({ data: { token, email, fullname, score }}) => {
+        toast('🦄 Login Success')
+        localStorage.setItem('token', token);
+        localStorage.setItem('email', email);
+        localStorage.setItem('fullname', fullname);
+        localStorage.setItem('score', score);
+        this.props.history.push('/')
+      })
+      .catch(err => toast.error('Something went wrong'))
   }
 
   render() {
