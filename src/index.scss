@@ -628,3 +628,14 @@ $white: #ffffff;
     transform: rotate(360deg);
   }
 }
+
+@keyframes glowing {
+  0% { box-shadow: 0 0 10px #54c30c; }
+  40% { box-shadow: 0 0 40px #54c30c; }
+  60% { box-shadow: 0 0 40px #54c30c; }
+  100% { box-shadow: 0 0 10px #54c30c; }
+}
+
+.card-glow {
+  animation: glowing 2500ms infinite;
+}

@@ -8,6 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { ip_address } from "../constants"
 
 import Loader from '../loader'
+import get from "lodash/get"
 
 const teams = {
   "KKR": {
@@ -109,7 +110,7 @@ class Home extends Component {
           ]
         }), () => toast(` 👍 ${res.data}`))
       })
-      .catch(err => toast.error(` 😱 ${err.response.data.message}`))
+      .catch(err => toast.error(` 😱 ${get(err, 'response.data.message') || "Something went wrong"}`))
   }
 
   componentDidMount() {
@@ -125,7 +126,7 @@ class Home extends Component {
           })
         }
       )
-      .catch(err => toast.error(` 😱 ${err.response.data.message}`))
+      .catch(err => toast.error(` 😱 ${get(err, 'response.data.message') || "Something went wrong"}`))
   }
 
   componentWillReceiveProps( { keydown } ) {
@@ -199,7 +200,7 @@ class Home extends Component {
                   date: selected.date,
                   email: localStorage.getItem('email')
                 })}
-                className="card card-left"
+                className={cx(["card card-left", selected.voted_for === selected.team_1 && 'card-glow'])}
                 style={{ backgroundImage: `linear-gradient(to right, ${teams[selected.team_1].colors[0]}, ${teams[selected.team_1].colors[1]})`}}
               >
                 <div
@@ -223,7 +224,7 @@ class Home extends Component {
                   date: selected.date,
                   email: localStorage.getItem('email')
                 })}
-                className="card card-right"
+                className={cx(["card card-right", selected.voted_for === selected.team_2 && 'card-glow'])}
                 style={{ backgroundImage: `linear-gradient(to right, ${teams[selected.team_2].colors[0]}, ${teams[selected.team_2].colors[1]})`}}
               >
                 <div

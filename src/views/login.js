@@ -4,6 +4,7 @@ import keydown from 'react-keydown';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import {ip_address} from "../constants"
+import get from 'lodash/get'
 
 class Login extends Component {
   state = {
@@ -26,7 +27,7 @@ class Login extends Component {
         localStorage.setItem('score', score);
         this.props.history.push('/')
       })
-      .catch(err => toast.error(` 😱 ${err.response.data.message}`))
+      .catch(err => toast.error(` 😱 ${get(err, 'response.data.message') || "Something went wrong"}`))
   }
 
   render() {
