@@ -268,10 +268,10 @@ class Home extends Component {
             </div>
 
             <div className="footer">
-              <div className="key-hint">
-                Navigate matches using keyboard arrow keys
-                <img src={require('../img/nav.svg')} alt="nav-keys"/>
-              </div>
+              {/*<div className="key-hint">*/}
+              {/*  Navigate matches using keyboard arrow keys*/}
+              {/*  <img src={require('../img/nav.svg')} alt="nav-keys"/>*/}
+              {/*</div>*/}
               <div className="logo"/>
             </div>
           </div>
