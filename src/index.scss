@@ -247,7 +247,7 @@ $white: #ffffff;
       &-left {
         background-image: url("./img/left.svg");
         top: 2*$size;
-        left: -1*$size;
+        left: -1.5*$size;
         transform: rotate(-5deg);
 
         &:hover {
@@ -258,7 +258,7 @@ $white: #ffffff;
       &-right {
         background-image: url("./img/right.svg");
         bottom: -3.5*$size;
-        right: 0;
+        right: -.5 * $size;
         transform: rotate(-5deg);
 
         &:hover {
@@ -403,10 +403,10 @@ $white: #ffffff;
 
       .player {
         position: absolute;
-        right: -2*$size;
+        right: 1.32*$size;
         bottom: -.4*$size;
         transition: .4s transform;
-        width: 85%;
+        width: 60%;
 
         img {
           width: 100%;
