@@ -83,7 +83,6 @@ $white: #ffffff;
       width: 50%;
 
       &__value {
-        flex: 1;
         text-align: center;
 
         &--digit {
@@ -177,7 +176,7 @@ $white: #ffffff;
 
   .ipl-logo {
     background-size: 669px 647px;
-    background-image: url(https://www.iplt20.com/resources/ver/i/sprites/global-sprite@x2.png);
+    background-image: url(./img/global-sprite@x2.png);
     background-position: -431px -259px;
     background-repeat: no-repeat;
     display: block;
@@ -651,4 +650,71 @@ $white: #ffffff;
 
 .card-glow {
   animation: glowing 2500ms infinite;
+}
+
+
+.players {
+  color: $white;
+  padding-left: 2 * $size;
+  padding-right: 2 * $size;
+  width: 17 * $size;
+  margin: 10px auto;
+
+  h3 {
+    color: $secondary-color;
+    text-align: center;
+  }
+
+  ul {
+    list-style: none;
+    height: 47vh;
+    overflow: auto;
+    padding-right: 2 * $size;
+    padding-left: 2 * $size;
+    border-right: 1px solid #5593ce;
+
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-transform: capitalize;
+      line-height: 2.5 * $size;
+      font-size: 1.8 * $size;
+
+      &.highlight {
+        background-color: #9ec573;
+        color: $primary-color;
+        padding: 2px 0;
+        position: relative;
+        font-weight: bold;
+        font-size: 1.7 * $size;
+
+        &:after {
+          content: '';
+          display: block;
+          position: absolute;
+          right: -2.1 * $size;
+          top: 0;
+          height: 2.9 * $size;
+          width: 2.1 * $size;
+          background-color: #9ec573;
+        }
+
+        &:before {
+          content: '';
+          display: block;
+          position: absolute;
+          left: -2.1 * $size;
+          top: 0;
+          height: 2.9 * $size;
+          width: 2.1 * $size;
+          background-color: #9ec573;
+        }
+      }
+
+      span {
+        font-weight: bold;
+      }
+    }
+  }
 }

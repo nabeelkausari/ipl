@@ -65,7 +65,9 @@ class Home extends Component {
     },
     matches: [],
     firstId: 1,
-    loading: true
+    loading: true,
+    score: 0,
+    allScores: []
   }
 
   selectTeam = selected => {
@@ -129,6 +131,14 @@ class Home extends Component {
 
   componentDidMount() {
 
+    axios.get(`${ip_address}/vote/get-scores`, {headers: { "Authorization": `Token ${localStorage.getItem('token')}` }})
+      .then(res => this.setState({score: res.data.user_score}))
+      .catch(err => toast.error(` 😱 ${get(err, 'response.data.message') || "Something went wrong"}`))
+
+    axios.get(`${ip_address}/vote/get-all-scores`, {headers: { "Authorization": `Token ${localStorage.getItem('token')}` }})
+      .then(res => this.setState({allScores: res.data.users_score}))
+      .catch(err => toast.error(` 😱 ${get(err, 'response.data.message') || "Something went wrong"}`))
+
     axios.get(`${ip_address}/vote/matches`, {headers: { "Authorization": `Token ${localStorage.getItem('token')}` }})
       .then(res => {
           let activeMatches = res.data.filter(d => d.is_expired === false)
@@ -163,7 +173,7 @@ class Home extends Component {
   }
 
   render() {
-    const { selected, matches, firstId, loading } = this.state;
+    const { selected, matches, firstId, loading, score, allScores } = this.state;
     return (
       loading
       ? <Loader/>
@@ -177,8 +187,20 @@ class Home extends Component {
             <div className="menu">
               <div className="score">
                 <div className="score__value">
-                  <span className="score__value--digit">{localStorage.getItem('score')}</span>
+                  <span className="score__value--digit">{score}</span>
                   <span className="score__value--info">Points</span>
+                </div>
+
+                <div className="players">
+                  <h3>Leader Board</h3>
+                  <ul>
+                    {allScores.map((s, i) => (
+                      <li
+                        className={s[0] === localStorage.getItem('email') && 'highlight'}
+                        key={i}
+                      >{s[0].split('.')[0]} <span>{s[1]}</span></li>
+                    ))}
+                  </ul>
                 </div>
               </div>
               <div className="matches">
