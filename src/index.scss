@@ -669,6 +669,7 @@ $white: #ffffff;
     list-style: none;
     height: 47vh;
     overflow: auto;
+    overflow-x: hidden;
     padding-right: 2 * $size;
     padding-left: 2 * $size;
     border-right: 1px solid #5593ce;
@@ -688,6 +689,7 @@ $white: #ffffff;
         position: relative;
         font-weight: bold;
         font-size: 1.7 * $size;
+        max-height: 2.9 * $size !important;
 
         &:after {
           content: '';
@@ -695,7 +697,8 @@ $white: #ffffff;
           position: absolute;
           right: -2.1 * $size;
           top: 0;
-          height: 2.9 * $size;
+          height: 100%;
+          max-height: 2.9 * $size;
           width: 2.1 * $size;
           background-color: #9ec573;
         }
@@ -706,7 +709,8 @@ $white: #ffffff;
           position: absolute;
           left: -2.1 * $size;
           top: 0;
-          height: 2.9 * $size;
+          height: 100%;
+          max-height: 2.9 * $size;
           width: 2.1 * $size;
           background-color: #9ec573;
         }
