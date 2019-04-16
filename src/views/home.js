@@ -156,17 +156,17 @@ class Home extends Component {
       .catch(err => toast.error(` 😱 ${get(err, 'response.data.message') || "Something went wrong"}`))
   }
 
-  // componentWillReceiveProps( { keydown } ) {
-  //
-  //   if ( keydown.event ) {
-  //     if (keydown.event.code === "ArrowRight" || keydown.event.code === "ArrowDown") {
-  //       this.next()
-  //     }
-  //     if (keydown.event.code === "ArrowLeft" || keydown.event.code === "ArrowUp") {
-  //       this.prev()
-  //     }
-  //   }
-  // }
+  componentWillReceiveProps( { keydown } ) {
+
+    if ( keydown.event ) {
+      if (keydown.event.code === "ArrowRight" || keydown.event.code === "ArrowDown") {
+        this.next()
+      }
+      if (keydown.event.code === "ArrowLeft" || keydown.event.code === "ArrowUp") {
+        this.prev()
+      }
+    }
+  }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
 
@@ -303,7 +303,7 @@ class Home extends Component {
                 {selected.is_expired && <span className="team-votes">{selected.team_2_details.no_of_votes}</span>}
               </div>
             </div>
-            <div className="details">
+            <div className={cx(["details", selected.is_expired && 'past'])}>
               <div className="details__left">
                 <h3 className="details__left--date">{moment(selected.date).format('ddd Do MMM')}</h3>
                 <h4 className="details__left--venue">{selected.place}</h4>
@@ -314,10 +314,10 @@ class Home extends Component {
             </div>
 
             <div className="footer">
-              {/*<div className="key-hint">*/}
-              {/*  Navigate matches using keyboard arrow keys*/}
-              {/*  <img src={require('../img/nav.svg')} alt="nav-keys"/>*/}
-              {/*</div>*/}
+              <div className="key-hint">
+                Navigate matches using keyboard arrow keys
+                <img src={require('../img/nav.svg')} alt="nav-keys"/>
+              </div>
               <div className="logo"/>
             </div>
           </div>

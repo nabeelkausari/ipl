@@ -127,7 +127,7 @@ $white: #ffffff;
           padding: 2*$size 5*$size 2*$size 3*$size;
           cursor: pointer;
           &.past {
-            opacity: .5;
+            opacity: .4;
           }
 
           &.selected {
@@ -286,7 +286,7 @@ $white: #ffffff;
       transition: .2s transform;
 
       &.past {
-        opacity: .8;
+        opacity: .5;
         cursor: not-allowed;
 
         .btn {
@@ -308,6 +308,20 @@ $white: #ffffff;
 
         .player {
           transform: scale(1.1) skewX(10deg) translateY(-1*$size);
+        }
+
+        .team-stats {
+          transform: scale(1.4) skewX(10deg) translateY(6*$size) translateX(6*$size);
+          //z-index: 1;
+
+          .won, .lost {
+            background: rgba(0, 0, 0, 0.7);
+            padding-top: 1.5 * $size;
+          }
+
+          .won:after, .lost:after {
+            transform: translateY(1*$size) translateX(-.5 * $size) scale(.7);
+          }
         }
 
         //.btn {
@@ -394,40 +408,57 @@ $white: #ffffff;
         font-size: 2.8 * $size;
         font-weight: 900;
         position: absolute;
-        top: 1.5 * $size;
-        left: 1.5 * $size;
+        top: 22 * $size;
+        left: 2.5 * $size;
         color: #fff;
+        transition: .5s all;
+        z-index: 2;
 
         .won {
           font-size: 3.5 * $size;
           font-style: italic;
           position: relative;
+          background: rgba(255, 255, 255, 0.2);
+          display: inline-block;
+          transform: skewX(-10deg);
+          padding: .8 * $size;
+          border-top-left-radius: .5 * $size;
+          transition: .3s all;
+
 
           &:after {
-            content: 'Won';
+            content: 'WON';
             position: absolute;
-            right: -.8 * $size;
+            right: -.2 * $size;
             top: -.8 * $size;
             font-size: 1.2 * $size;
             font-style: italic;
             font-weight: 900;
+            transition: .3s all;
           }
         }
 
         .lost {
           font-size: 3.5 * $size;
           font-style: italic;
-          margin-left: 1.8 * $size;
+          margin-left: .3 * $size;
           position: relative;
+          background: rgba(255, 255, 255, 0.2);
+          display: inline-block;
+          transform: skewX(-10deg);
+          padding: .8 * $size;
+          border-bottom-right-radius: .5 * $size;
+          transition: .3s all;
 
           &:after {
-            content: 'Lost';
+            content: 'LOST';
             position: absolute;
-            right: -.8 * $size;
+            right: -.2 * $size;
             top: -.8 * $size;
             font-size: 1.2 * $size;
             font-style: italic;
             font-weight: 900;
+            transition: .3s all;
           }
         }
       }
@@ -531,6 +562,10 @@ $white: #ffffff;
     padding: 1*$size 12*$size;
     flex: 1;
     display: flex;
+
+    &.past {
+      opacity: .4;
+    }
 
     &__left {
       flex: 1;
