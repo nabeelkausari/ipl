@@ -27,7 +27,7 @@
 }
 
 $size: 1.14vh;
-//$size: 10px;
+//average $size is equal to 10px;
 
 html, body, #root {
   height: 100%;
@@ -126,6 +126,9 @@ $white: #ffffff;
           color: $white;
           padding: 2*$size 5*$size 2*$size 3*$size;
           cursor: pointer;
+          &.past {
+            opacity: .5;
+          }
 
           &.selected {
             background-color: $secondary-color;
@@ -147,6 +150,7 @@ $white: #ffffff;
           b {
             display: block;
             font-size: 2.6*$size;
+
           }
 
           span {
@@ -281,7 +285,16 @@ $white: #ffffff;
       cursor: pointer;
       transition: .2s transform;
 
-      &:hover {
+      &.past {
+        opacity: .8;
+        cursor: not-allowed;
+
+        .btn {
+          cursor: not-allowed;
+        }
+      }
+
+      &:hover:not(.past) {
 
         transform: scale(1.1) skewX(-10deg);
 
@@ -303,12 +316,12 @@ $white: #ffffff;
         //}
       }
 
-      &:active {
+      &:active:not(.past) {
 
         transform: scale(1) skewX(-10deg);
 
         .team-logo {
-          transform: skewX(10deg) translateY(0);
+          transform: skewX(10deg);
         }
 
         .team-name {
@@ -316,7 +329,7 @@ $white: #ffffff;
         }
 
         .player {
-          transform: scale(1) skewX(10deg) translateY(0px);
+          transform: skewX(10deg);
         }
 
         .btn {
@@ -377,6 +390,66 @@ $white: #ffffff;
         }
       }
 
+      .team-stats {
+        font-size: 2.8 * $size;
+        font-weight: 900;
+        position: absolute;
+        top: 1.5 * $size;
+        left: 1.5 * $size;
+        color: #fff;
+
+        .won {
+          font-size: 3.5 * $size;
+          font-style: italic;
+          position: relative;
+
+          &:after {
+            content: 'Won';
+            position: absolute;
+            right: -.8 * $size;
+            top: -.8 * $size;
+            font-size: 1.2 * $size;
+            font-style: italic;
+            font-weight: 900;
+          }
+        }
+
+        .lost {
+          font-size: 3.5 * $size;
+          font-style: italic;
+          margin-left: 1.8 * $size;
+          position: relative;
+
+          &:after {
+            content: 'Lost';
+            position: absolute;
+            right: -.8 * $size;
+            top: -.8 * $size;
+            font-size: 1.2 * $size;
+            font-style: italic;
+            font-weight: 900;
+          }
+        }
+      }
+
+      .team-votes {
+        color: $primary-color;
+        font-size: 3.6 * $size;
+        position: absolute;
+        bottom: -5 * $size;
+        font-weight: bold;
+        font-style: italic;
+
+        &:after {
+          content: 'Votes';
+          position: absolute;
+          right: -4.4 * $size;
+          bottom: .7 * $size;
+          font-size: 1.6 * $size;
+          color: #888888;
+        }
+      }
+
       .team-name {
         font-size: 5.6*$size;
         margin-top: 13*$size;
@@ -385,7 +458,6 @@ $white: #ffffff;
         z-index: 2;
         font-style: italic;
         transition: .3s transform;
-
       }
 
       .team-name-bg {

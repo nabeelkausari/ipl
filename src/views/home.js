@@ -32,7 +32,7 @@ const teams = {
     captain: require('../img/captains/mi.png')
   },
   "RR": {
-    colors: ["#4587c9", "#0751a0"],
+    colors: ["#ffa8c3", "#0751a0"],
     logo: require('../img/teams/rr.png'),
     captain: require('../img/captains/rr.png')
   },
@@ -69,6 +69,8 @@ class Home extends Component {
     score: 0,
     allScores: []
   }
+  matchListNode = null;
+  matchListItemNode = null;
 
   selectTeam = selected => {
     this.setState({selected})
@@ -85,14 +87,15 @@ class Home extends Component {
 
   prev = () => {
     const { selected: {id }, firstId } = this.state
-    if (id === firstId) return;
-
+    // if (id === firstId) return;
+    if (id === 1) return;
     let prevMatchId = id - 1;
     let selected = this.state.matches.find(m => m.id === prevMatchId);
     this.setState({ selected })
   }
 
   onVote = vote => {
+    if (vote.is_expired) return
     this.setState(state => ({
       selected: {
         ...state.selected,
@@ -130,7 +133,6 @@ class Home extends Component {
   }
 
   componentDidMount() {
-
     axios.get(`${ip_address}/vote/get-scores`, {headers: { "Authorization": `Token ${localStorage.getItem('token')}` }})
       .then(res => this.setState({score: res.data.user_score}))
       .catch(err => toast.error(` 😱 ${get(err, 'response.data.message') || "Something went wrong"}`))
@@ -142,8 +144,9 @@ class Home extends Component {
     axios.get(`${ip_address}/vote/matches`, {headers: { "Authorization": `Token ${localStorage.getItem('token')}` }})
       .then(res => {
           let activeMatches = res.data.filter(d => d.is_expired === false)
+          let allMatches = res.data
           this.setState({
-            matches: activeMatches,
+            matches: allMatches,
             selected: activeMatches[0],
             firstId: activeMatches[0].id,
             loading: false
@@ -153,13 +156,26 @@ class Home extends Component {
       .catch(err => toast.error(` 😱 ${get(err, 'response.data.message') || "Something went wrong"}`))
   }
 
-  componentWillReceiveProps( { keydown } ) {
-    if ( keydown.event ) {
-      if (keydown.event.code === "ArrowRight" || keydown.event.code === "ArrowDown") {
-        this.next()
-      }
-      if (keydown.event.code === "ArrowLeft" || keydown.event.code === "ArrowUp") {
-        this.prev()
+  // componentWillReceiveProps( { keydown } ) {
+  //
+  //   if ( keydown.event ) {
+  //     if (keydown.event.code === "ArrowRight" || keydown.event.code === "ArrowDown") {
+  //       this.next()
+  //     }
+  //     if (keydown.event.code === "ArrowLeft" || keydown.event.code === "ArrowUp") {
+  //       this.prev()
+  //     }
+  //   }
+  // }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+
+    if (this.matchListNode) {
+      const topPosition = (this.matchListItemNode.scrollHeight * (this.state.selected.id - 1));
+      const belowViewArea = (topPosition - this.matchListNode.scrollTop) > this.matchListNode.offsetHeight;
+      const aboveViewArea = (topPosition - this.matchListNode.scrollTop) < 0;
+      if (belowViewArea || aboveViewArea) {
+        this.matchListNode.scrollTop = topPosition - (topPosition / 100);
       }
     }
   }
@@ -204,13 +220,14 @@ class Home extends Component {
                 </div>
               </div>
               <div className="matches">
-                <h3>Upcoming Matches</h3>
-                <ul className="matches__list">
+                <h3>All Matches</h3>
+                <ul className="matches__list" ref={node => this.matchListNode = node}>
                   {matches.map(match => (
                     <li
                       key={match.id}
                       onClick={() => this.selectTeam(match)}
-                      className={cx(["matches__list--item", match.id === selected.id && 'selected'])}
+                      className={cx(["matches__list--item", match.id === selected.id && 'selected', match.is_expired && 'past'])}
+                      ref={node => this.matchListItemNode = node}
                     >
                       <b>{match.team_1} vs {match.team_2}</b>
                       <span>{moment(match.date).format('ddd Do MMM')}</span>
@@ -225,7 +242,7 @@ class Home extends Component {
           <div className="right-panel">
             <div className="logout" title="Logout" onClick={this.logout}/>
             <div className="card-holder">
-              {selected.id !== firstId && <div className="arrow arrow-left" onClick={this.prev}/>}
+              {selected.id !== 1 && <div className="arrow arrow-left" onClick={this.prev}/>}
               {selected.id !== matches.length && <div className="arrow arrow-right" onClick={this.next}/>}
 
               <div
@@ -234,11 +251,14 @@ class Home extends Component {
                   team_name: selected.team_1,
                   match_time: selected.match_time,
                   date: selected.date,
+                  is_expired: selected.is_expired,
                   email: localStorage.getItem('email')
                 })}
-                className={cx(["card card-left", selected.voted_for === selected.team_1 && 'card-glow'])}
+                className={cx(["card card-left", selected.voted_for === selected.team_1 && 'card-glow', selected.is_expired && 'past'])}
                 style={{ backgroundImage: `linear-gradient(to right, ${teams[selected.team_1].colors[0]}, ${teams[selected.team_1].colors[1]})`}}
               >
+                <span className="team-stats"><span className="won">{selected.team_1_details.won}</span><span className="lost">{selected.team_1_details.lost}</span></span>
+
                 <div
                   className="team-logo team-logo-left"
                   style={{ backgroundPosition: `${teams[selected.team_1].logo[0]} ${teams[selected.team_1].logo[1]}` }}
@@ -251,6 +271,7 @@ class Home extends Component {
                 <div className="player">
                   <img src={teams[selected.team_1].captain} alt="player"/>
                 </div>
+                {selected.is_expired && <span className="team-votes">{selected.team_1_details.no_of_votes}</span>}
               </div>
               <div
                 onClick={() => this.onVote({
@@ -258,11 +279,13 @@ class Home extends Component {
                   team_name: selected.team_2,
                   match_time: selected.match_time,
                   date: selected.date,
-                  email: localStorage.getItem('email')
+                  is_expired: selected.is_expired,
+                  email: localStorage.getItem('email'),
                 })}
-                className={cx(["card card-right", selected.voted_for === selected.team_2 && 'card-glow'])}
+                className={cx(["card card-right", selected.voted_for === selected.team_2 && 'card-glow', selected.is_expired && 'past'])}
                 style={{ backgroundImage: `linear-gradient(to right, ${teams[selected.team_2].colors[0]}, ${teams[selected.team_2].colors[1]})`}}
               >
+                <span className="team-stats"><span className="won">{selected.team_2_details.won}</span><span className="lost">{selected.team_2_details.lost}</span></span>
                 <div
                   className="team-logo team-logo-right"
                   style={{ backgroundPosition: `${teams[selected.team_2].logo[0]} ${teams[selected.team_2].logo[1]}` }}
@@ -277,6 +300,7 @@ class Home extends Component {
                 <div className="player">
                   <img src={teams[selected.team_2].captain} alt="player"/>
                 </div>
+                {selected.is_expired && <span className="team-votes">{selected.team_2_details.no_of_votes}</span>}
               </div>
             </div>
             <div className="details">
