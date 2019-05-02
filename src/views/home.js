@@ -61,7 +61,9 @@ class Home extends Component {
       team_1 : "KKR",
       team_2 : "RCB",
       match_time : "4:30pm",
-      voted_for : "RCB"
+      voted_for : "RCB",
+      team_1_details: {},
+      team_2_details: {}
     },
     matches: [],
     firstId: 1,
@@ -271,7 +273,8 @@ class Home extends Component {
                 <div className="player">
                   <img src={teams[selected.team_1].captain} alt="player"/>
                 </div>
-                {selected.is_expired && <span className="team-votes">{selected.team_1_details.no_of_votes}</span>}
+                {/*{selected.is_expired && <span className="team-votes">{selected.team_1_details.no_of_votes}</span>}*/}
+                <span className="team-votes">{selected.team_1_details.no_of_votes}<span>Votes</span></span>
               </div>
               <div
                 onClick={() => this.onVote({
@@ -300,7 +303,8 @@ class Home extends Component {
                 <div className="player">
                   <img src={teams[selected.team_2].captain} alt="player"/>
                 </div>
-                {selected.is_expired && <span className="team-votes">{selected.team_2_details.no_of_votes}</span>}
+                {/*{selected.is_expired && <span className="team-votes">{selected.team_2_details.no_of_votes}</span>}*/}
+                <span className="team-votes">{selected.team_2_details.no_of_votes}<span>Votes</span></span>
               </div>
             </div>
             <div className={cx(["details", selected.is_expired && 'past'])}>

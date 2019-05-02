@@ -470,12 +470,10 @@ $white: #ffffff;
         bottom: -5 * $size;
         font-weight: bold;
         font-style: italic;
+        width: 100%;
+        padding-top: $size;
 
-        &:after {
-          content: 'Votes';
-          position: absolute;
-          right: -4.4 * $size;
-          bottom: .7 * $size;
+        span {
           font-size: 1.6 * $size;
           color: #888888;
         }
