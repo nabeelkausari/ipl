@@ -150,7 +150,7 @@ class Home extends Component {
           this.setState({
             matches: allMatches,
             selected: activeMatches[0],
-            firstId: activeMatches[0].id,
+            firstId: activeMatches[0] && activeMatches[0].id,
             loading: false
           })
         }
