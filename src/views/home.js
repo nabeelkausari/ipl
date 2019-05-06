@@ -149,7 +149,7 @@ class Home extends Component {
           let allMatches = res.data
           this.setState({
             matches: allMatches,
-            selected: activeMatches[0],
+            selected: activeMatches[0] || allMatches[allMatches.length - 1],
             firstId: activeMatches[0] && activeMatches[0].id,
             loading: false
           })
