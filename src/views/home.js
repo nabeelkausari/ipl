@@ -10,46 +10,100 @@ import { ip_address } from "../constants"
 import Loader from '../loader'
 import get from "lodash/get"
 
+// const teams = {
+//   "KKR": {
+//     colors: ["#5F5AA2","#412C69"],
+//     captain: require('../img/ipl/captains/kkr.png'),
+//     logo: require('../img/ipl/teams/kkr.png')
+//   },
+//   "RCB": {
+//     colors: ["#545555", "#1D1D1B"],
+//     logo: require('../img/ipl/teams/rcb.png'),
+//     captain: require('../img/ipl/captains/rcb.png')
+//   },
+//   "KXIP": {
+//     colors: ["#d42028", "#b02026"],
+//     logo: require('../img/ipl/teams/kxip.png'),
+//     captain: require('../img/ipl/captains/kxip.png')
+//   },
+//   "MI": {
+//     colors: ["#046fb2", "#005da0"],
+//     logo: require('../img/ipl/teams/mi.png'),
+//     captain: require('../img/ipl/captains/mi.png')
+//   },
+//   "RR": {
+//     colors: ["#ffa8c3", "#0751a0"],
+//     logo: require('../img/ipl/teams/rr.png'),
+//     captain: require('../img/ipl/captains/rr.png')
+//   },
+//   "SRH": {
+//     colors: ["#f89734", "#f26732"],
+//     logo: require('../img/ipl/teams/srh.png'),
+//     captain: require('../img/ipl/captains/srh.png')
+//   },
+//   "DC": {
+//     colors: ["#0076bf", "#004c94"],
+//     logo: require('../img/ipl/teams/dc.png'),
+//     captain: require('../img/ipl/captains/dc.png')
+//   },
+//   "CSK": {
+//     colors: ["#f1d100", "#ec6707"],
+//     logo: require('../img/ipl/teams/csk.png'),
+//     captain: require('../img/ipl/captains/csk.png')
+//   },
+// }
+
+
 const teams = {
-  "KKR": {
-    colors: ["#5F5AA2","#412C69"],
-    captain: require('../img/captains/kkr.png'),
-    logo: require('../img/teams/kkr.png')
+  "AFG": {
+    colors: ["#577C05","#25252D"],
+    logo: require('../img/world-cup/teams/afg.svg'),
+    captain: require('../img/world-cup/captains/afg.png')
   },
-  "RCB": {
-    colors: ["#545555", "#1D1D1B"],
-    logo: require('../img/teams/rcb.png'),
-    captain: require('../img/captains/rcb.png')
+  "AUS": {
+    colors: ["#6AAEFF", "#41479B"],
+    logo: require('../img/world-cup/teams/aus.svg'),
+    captain: require('../img/world-cup/captains/aus.png')
   },
-  "KXIP": {
-    colors: ["#d42028", "#b02026"],
-    logo: require('../img/teams/kxip.png'),
-    captain: require('../img/captains/kxip.png')
+  "BAN": {
+    colors: ["#73AF00", "#006837"],
+    logo: require('../img/world-cup/teams/ban.svg'),
+    captain: require('../img/world-cup/captains/ban.png')
   },
-  "MI": {
-    colors: ["#046fb2", "#005da0"],
-    logo: require('../img/teams/mi.png'),
-    captain: require('../img/captains/mi.png')
+  "ENG": {
+    colors: ["#FF4B55", "#D01000"],
+    logo: require('../img/world-cup/teams/eng.svg'),
+    captain: require('../img/world-cup/captains/eng.png')
   },
-  "RR": {
-    colors: ["#ffa8c3", "#0751a0"],
-    logo: require('../img/teams/rr.png'),
-    captain: require('../img/captains/rr.png')
+  "IND": {
+    colors: ["#FAB446", "#FA6346"],
+    logo: require('../img/world-cup/teams/ind.svg'),
+    captain: require('../img/world-cup/captains/ind.png')
   },
-  "SRH": {
-    colors: ["#f89734", "#f26732"],
-    logo: require('../img/teams/srh.png'),
-    captain: require('../img/captains/srh.png')
+  "NZ": {
+    colors: ["#008BE9", "#41479B"],
+    logo: require('../img/world-cup/teams/nz.svg'),
+    captain: require('../img/world-cup/captains/nz.png')
   },
-  "DC": {
-    colors: ["#0076bf", "#004c94"],
-    logo: require('../img/teams/dc.png'),
-    captain: require('../img/captains/dc.png')
+  "PAK": {
+    colors: ["#73AF00", "#00A437"],
+    logo: require('../img/world-cup/teams/pak.svg'),
+    captain: require('../img/world-cup/captains/pak.png')
   },
-  "CSK": {
-    colors: ["#f1d100", "#ec6707"],
-    logo: require('../img/teams/csk.png'),
-    captain: require('../img/captains/csk.png')
+  "SA": {
+    colors: ["#e2e15a", "#73af00"],
+    logo: require('../img/world-cup/teams/sa.svg'),
+    captain: require('../img/world-cup/captains/sa.png')
+  },
+  "SL": {
+    colors: ["#963C3C", "#FF7350"],
+    logo: require('../img/world-cup/teams/sl.svg'),
+    captain: require('../img/world-cup/captains/sl.png')
+  },
+  "WI": {
+    colors: ["#B10041", "#7B0041"],
+    logo: require('../img/world-cup/teams/wi.svg'),
+    captain: require('../img/world-cup/captains/wi.png')
   },
 }
 
@@ -208,18 +262,21 @@ class Home extends Component {
                   <span className="score__value--digit">{score}</span>
                   <span className="score__value--info">Points</span>
                 </div>
+                {
+                  allScores.length > 0 &&
+                  <div className="players">
+                    <h3>Leader Board</h3>
+                    <ul>
+                      {allScores.map((s, i) => (
+                          <li
+                              className={s[0] === localStorage.getItem('email') && 'highlight'}
+                              key={i}
+                          >{s[0].split('.')[0]} <span>{s[1]}</span></li>
+                      ))}
+                    </ul>
+                  </div>
+                }
 
-                <div className="players">
-                  <h3>Leader Board</h3>
-                  <ul>
-                    {allScores.map((s, i) => (
-                      <li
-                        className={s[0] === localStorage.getItem('email') && 'highlight'}
-                        key={i}
-                      >{s[0].split('.')[0]} <span>{s[1]}</span></li>
-                    ))}
-                  </ul>
-                </div>
               </div>
               <div className="matches">
                 <h3>All Matches</h3>
@@ -259,7 +316,13 @@ class Home extends Component {
                 className={cx(["card card-left", selected.voted_for === selected.team_1 && 'card-glow', selected.is_expired && 'past'])}
                 style={{ backgroundImage: `linear-gradient(to right, ${teams[selected.team_1].colors[0]}, ${teams[selected.team_1].colors[1]})`}}
               >
-                <span className="team-stats"><span className="won">{selected.team_1_details.won}</span><span className="lost">{selected.team_1_details.lost}</span></span>
+                {
+                  selected.team_1_details.won && selected.team_1_details.lost &&
+                  <span className="team-stats">
+                    <span className="won">{selected.team_1_details.won}</span>
+                    <span className="lost">{selected.team_1_details.lost}</span>
+                 </span>
+                }
 
                 <div
                   className="team-logo team-logo-left"
@@ -288,7 +351,13 @@ class Home extends Component {
                 className={cx(["card card-right", selected.voted_for === selected.team_2 && 'card-glow', selected.is_expired && 'past'])}
                 style={{ backgroundImage: `linear-gradient(to right, ${teams[selected.team_2].colors[0]}, ${teams[selected.team_2].colors[1]})`}}
               >
-                <span className="team-stats"><span className="won">{selected.team_2_details.won}</span><span className="lost">{selected.team_2_details.lost}</span></span>
+                {
+                  selected.team_2_details.won && selected.team_2_details.lost &&
+                    <span className="team-stats">
+                      <span className="won">{selected.team_2_details.won}</span>
+                      <span className="lost">{selected.team_2_details.lost}</span>
+                    </span>
+                }
                 <div
                   className="team-logo team-logo-right"
                   style={{ backgroundPosition: `${teams[selected.team_2].logo[0]} ${teams[selected.team_2].logo[1]}` }}

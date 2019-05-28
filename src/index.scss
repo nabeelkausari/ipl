@@ -40,8 +40,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-$primary-color: #28387D;
-$secondary-color: #5593CE;
+//$primary-color: #28387D;
+//$secondary-color: #5593CE;
+$primary-color: #60717e;
+$secondary-color: #fc1048;
 $white: #ffffff;
 
 .layout {
@@ -124,7 +126,7 @@ $white: #ffffff;
 
         &--item {
           color: $white;
-          padding: 2*$size 5*$size 2*$size 3*$size;
+          padding: 2.1*$size 5*$size 2*$size 3*$size;
           cursor: pointer;
           &.past {
             opacity: .4;
@@ -140,7 +142,7 @@ $white: #ffffff;
               position: absolute;
               top: -1.95*$size;
               right: 0;
-              background-color: #3e6c98;
+              background-color: $primary-color;
               height: 2*$size;
               width: 2*$size;
               clip-path: polygon(0 50%, 100% 100%, 0 100% );
@@ -178,15 +180,25 @@ $white: #ffffff;
     }
   }
 
+  //.ipl-logo {
+  //  background-size: 669px 647px;
+  //  background-image: url(./img/ICC_Cricket_World_Cup_2019_logo_white.svg);
+  //  background-position: -431px -259px;
+  //  background-repeat: no-repeat;
+  //  display: block;
+  //  height: 56px;
+  //  width: 110px;
+  //  margin: 20px auto 20px 20px;
+  //}
+
   .ipl-logo {
-    background-size: 669px 647px;
-    background-image: url(./img/global-sprite@x2.png);
-    background-position: -431px -259px;
+    background-image: url(./img/ICC_Cricket_World_Cup_2019_logo_white.svg);
     background-repeat: no-repeat;
     display: block;
-    height: 56px;
-    width: 110px;
-    margin: 20px auto 20px 20px;
+    height: 150px;
+    width: 169px;
+    margin: 0px auto 20px 40px;
+    background-size: contain;
   }
 
 
@@ -240,15 +252,16 @@ $white: #ffffff;
 
     .arrow {
       width: 6*$size;
-      height: 17*$size;
+      height: 18*$size;
       position: absolute;
       background-repeat: no-repeat;
       background-size: cover;
       transition: .2s transform;
       cursor: pointer;
+      padding: 2px;
 
       &-left {
-        background-image: url("./img/left.svg");
+        background-image: url("./img/left-icc.svg");
         top: 2*$size;
         left: -1.5*$size;
         transform: rotate(-5deg);
@@ -256,16 +269,24 @@ $white: #ffffff;
         &:hover {
           transform: scale(1.2) rotate(-5deg) translateX(-.5*$size);
         }
+
+        &:active {
+          transform: translateY(-2px);
+        }
       }
 
       &-right {
-        background-image: url("./img/right.svg");
+        background-image: url("./img/right-icc.svg");
         bottom: -3.5*$size;
         right: -.5 * $size;
         transform: rotate(-5deg);
 
         &:hover {
           transform: scale(1.2) rotate(-5deg) translateX(.5*$size);
+        }
+
+        &:active {
+          transform: translateY(-2px);
         }
       }
 
@@ -636,7 +657,7 @@ $white: #ffffff;
   position: absolute;
   top: 1*$size;
   right: 3*$size;
-  background-image: url("./img/logout.svg");
+  background-image: url("./img/logout-icc.svg");
   background-size: cover;
   cursor: pointer;
 
